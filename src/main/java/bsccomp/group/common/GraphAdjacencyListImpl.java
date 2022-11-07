@@ -35,7 +35,6 @@ public class GraphAdjacencyListImpl implements GraphAdjacencyList<String> {
         for (Object key: this.adjacencyList.keySet()) {
             System.out.println("\nNode " + key
                     + " makes an edge with ");
-//            System.out.println(this.adjacencyList.get(key));
             this.adjacencyList.get(key).entrySet().forEach(
                         e -> System.out.println(
                                 "\tNode " + e.getKey()
