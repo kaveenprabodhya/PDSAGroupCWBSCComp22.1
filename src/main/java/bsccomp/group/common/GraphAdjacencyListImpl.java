@@ -1,5 +1,7 @@
 package bsccomp.group.common;
 
+import bsccomp.group.common.models.Vertex;
+
 import java.util.HashMap;
 import java.util.HashSet;
 
