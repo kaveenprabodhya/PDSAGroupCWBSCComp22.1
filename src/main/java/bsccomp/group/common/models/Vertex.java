@@ -1,4 +1,4 @@
-package bsccomp.group.common;
+package bsccomp.group.common.models;
 
 import java.util.Objects;
 
