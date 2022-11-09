@@ -1,5 +1,6 @@
 package bsccomp.group.common;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 public interface GraphAdjacencyList<T> {
@@ -7,4 +8,5 @@ public interface GraphAdjacencyList<T> {
     void addNodeAndWeightConnected(T vertex,T destinationNode, int weight);
     HashSet<?> findAllDestinationNodeAndWeightsToAVertex(T node);
     void printAdjacencyList();
+    HashMap<T, HashMap<T, Integer>> get();
 }
