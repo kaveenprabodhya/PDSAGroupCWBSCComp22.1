@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class GraphAdjacencyListImpl implements GraphAdjacencyList<String> {
-    protected HashMap<Object, HashMap<Object, Integer>> adjacencyList;
+    protected HashMap<String, HashMap<String, Integer>> adjacencyList;
 
     public GraphAdjacencyListImpl() {
         adjacencyList = new HashMap<>();
@@ -40,5 +40,10 @@ public class GraphAdjacencyListImpl implements GraphAdjacencyList<String> {
                             + " with edge weight "
                             + value + " "));
         }
+    }
+
+    @Override
+    public HashMap<String, HashMap<String, Integer>> get() {
+        return adjacencyList;
     }
 }
