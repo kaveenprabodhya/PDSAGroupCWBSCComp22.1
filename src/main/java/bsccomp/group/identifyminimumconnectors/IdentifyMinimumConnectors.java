@@ -14,6 +14,10 @@ public class IdentifyMinimumConnectors extends Base {
         this.adjacencyList = adjacencyList;
     }
 
+    public void displayGraph(){
+        this.adjacencyList.printAdjacencyList();
+    }
+
     public void findMinimumConnectors(){
         // create a graph for find minimum connectors
         this.createGraph(adjacencyList);
