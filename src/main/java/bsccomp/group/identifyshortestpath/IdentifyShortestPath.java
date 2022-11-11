@@ -10,8 +10,4 @@ public class IdentifyShortestPath extends Base {
     public IdentifyShortestPath(GraphAdjacencyList<Vertex> adjacencyList) {
         this.adjacencyList = adjacencyList;
     }
-
-    public void displayGraph(){
-        this.adjacencyList.printAdjacencyList();
-    }
 }
