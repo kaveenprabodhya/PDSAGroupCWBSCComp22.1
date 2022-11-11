@@ -1,5 +1,6 @@
 package bsccomp.group.common;
 
+import bsccomp.group.common.models.Edge;
 import bsccomp.group.common.models.Vertex;
 
 import java.util.*;
@@ -37,7 +38,7 @@ public class Base {
             this.clearSecondTempCityList();
         }
         this.clearTempCityList();
-        this.removeDependencies(adjacencyList.get());
+        this.removeDependencies(adjacencyList.returnList());
     }
 
     // method for select random city from cities array
@@ -63,7 +64,6 @@ public class Base {
                 throw new RuntimeException(e.getMessage());
             }
         }
-        System.out.println(randCity);
         return randCity;
     }
 
@@ -129,9 +129,9 @@ public class Base {
     }
 
     // remove dependencies vertex having
-    protected void removeDependencies(HashMap<Vertex, HashMap<Vertex, Integer>> adjList) {
-        for (Map.Entry<Vertex, HashMap<Vertex, Integer>> vertexMapEntry : adjList.entrySet()) {
-            for (Map.Entry<Vertex, Integer> desVertexWeightEntry : vertexMapEntry.getValue().entrySet()) {
+    protected void removeDependencies(HashMap<Vertex, HashMap<Vertex, Edge>> adjList) {
+        for (Map.Entry<Vertex, HashMap<Vertex, Edge>> vertexMapEntry : adjList.entrySet()) {
+            for (Map.Entry<Vertex, Edge> desVertexWeightEntry : vertexMapEntry.getValue().entrySet()) {
                 Map<Vertex, Vertex> pairOfKeys = this.checkCombinations(vertexMapEntry.getKey().getName(),
                         desVertexWeightEntry.getKey().getName(), adjList);
                 if (!pairOfKeys.isEmpty())
@@ -142,15 +142,15 @@ public class Base {
     }
 
     private void removeFoundDependencies(Map<Vertex, Vertex> pairOfKeys,
-                                         HashMap<Vertex, HashMap<Vertex, Integer>> adjList) {
+                                         HashMap<Vertex, HashMap<Vertex, Edge>> adjList) {
         for (Map.Entry<Vertex, Vertex> pairOfKeysEntrySet : pairOfKeys.entrySet()) {
             adjList.get(pairOfKeysEntrySet.getKey()).remove(pairOfKeysEntrySet.getValue());
         }
     }
 
     // check removed dependency is the only combination if it is re-assign node and check for dependency again
-    private void checkIfRemovedOnlyCombinationOfVertex(HashMap<Vertex, HashMap<Vertex, Integer>> adjList) {
-        for (Map.Entry<Vertex, HashMap<Vertex, Integer>> vertexMapEntry : adjList.entrySet()) {
+    private void checkIfRemovedOnlyCombinationOfVertex(HashMap<Vertex, HashMap<Vertex, Edge>> adjList) {
+        for (Map.Entry<Vertex, HashMap<Vertex, Edge>> vertexMapEntry : adjList.entrySet()) {
             if (vertexMapEntry.getValue().entrySet().isEmpty()) {
                 String randCity = this.selectRandomCityOnlyOnce();
                 vertexMapEntry.getValue().put(new Vertex(randCity), this.getRandomDistance());
@@ -163,11 +163,11 @@ public class Base {
     // check for same city dependencies combinations with different distance assign
     private Map<Vertex, Vertex> checkCombinations(String keyNode,
                                                   String destinationKeyNode,
-                                                  HashMap<Vertex, HashMap<Vertex, Integer>> adjList) {
-        for (Map.Entry<Vertex, HashMap<Vertex, Integer>> vertexMapEntry : adjList.entrySet()) {
+                                                  HashMap<Vertex, HashMap<Vertex, Edge>> adjList) {
+        for (Map.Entry<Vertex, HashMap<Vertex, Edge>> vertexMapEntry : adjList.entrySet()) {
             if (!vertexMapEntry.getKey().getName().equalsIgnoreCase(keyNode)
                     && vertexMapEntry.getKey().getName().equalsIgnoreCase(destinationKeyNode)) {
-                for (Map.Entry<Vertex, Integer> desVertexEntry : vertexMapEntry.getValue().entrySet()) {
+                for (Map.Entry<Vertex, Edge> desVertexEntry : vertexMapEntry.getValue().entrySet()) {
                     if (desVertexEntry.getKey().getName().equalsIgnoreCase(keyNode)) {
                         return Map.of(vertexMapEntry.getKey(), desVertexEntry.getKey());
                     }
@@ -178,7 +178,12 @@ public class Base {
     }
 
     // method generate random distance between 10-100
-    protected Integer getRandomDistance() {
-        return (int) (Math.random() * maximumDistance + minimumDistance);
+    protected Edge getRandomDistance() {
+        return new Edge((int) (Math.random() * maximumDistance + minimumDistance));
+    }
+
+    // print graph
+    public void displayGraph(GraphAdjacencyList<Vertex> adjList){
+        adjList.printAdjacencyList();
     }
 }
