@@ -1,24 +1,26 @@
 package bsccomp.group.common;
 
+import bsccomp.group.common.models.Edge;
 import bsccomp.group.common.models.Vertex;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 
 public class GraphAdjacencyListImpl implements GraphAdjacencyList<Vertex> {
-    protected HashMap<Vertex, HashMap<Vertex, Integer>> adjacencyList;
+    protected HashMap<Vertex, HashMap<Vertex, Edge>> adjacencyList;
 
     public GraphAdjacencyListImpl() {
-        adjacencyList = new HashMap<>();
+        adjacencyList = new LinkedHashMap<>();
     }
 
     @Override
     public void addEdge(Vertex node) {
-        adjacencyList.put(node, new HashMap<>());
+        adjacencyList.put(node, new LinkedHashMap<>());
     }
 
     @Override
-    public void addNodeAndWeightConnected(Vertex vertex, Vertex destinationNode, int weight) {
+    public void addNodeAndWeightConnected(Vertex vertex, Vertex destinationNode, Edge weight) {
         adjacencyList.get(vertex).put(destinationNode, weight);
     }
 
@@ -40,12 +42,12 @@ public class GraphAdjacencyListImpl implements GraphAdjacencyList<Vertex> {
             this.adjacencyList.get(key).forEach((key1, value) -> System.out.println(
                     "\tNode " + key1.getName()
                             + " with edge weight "
-                            + value + " "));
+                            + value.getWeight() + " "));
         }
     }
 
     @Override
-    public HashMap<Vertex, HashMap<Vertex, Integer>> get() {
+    public HashMap<Vertex, HashMap<Vertex, Edge>> returnList() {
         return adjacencyList;
     }
 }
