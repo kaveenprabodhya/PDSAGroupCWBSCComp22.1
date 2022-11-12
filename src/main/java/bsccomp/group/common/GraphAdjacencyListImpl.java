@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 
-public class GraphAdjacencyListImpl implements GraphAdjacencyList<Vertex> {
+public class GraphAdjacencyListImpl implements GraphAdjacencyList<Vertex, Edge> {
     protected HashMap<Vertex, HashMap<Vertex, Edge>> adjacencyList;
 
     public GraphAdjacencyListImpl() {
