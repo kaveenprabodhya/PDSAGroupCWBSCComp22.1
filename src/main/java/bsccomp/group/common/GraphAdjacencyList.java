@@ -1,14 +1,12 @@
 package bsccomp.group.common;
 
-import bsccomp.group.common.models.Edge;
-
 import java.util.HashMap;
 import java.util.HashSet;
 
-public interface GraphAdjacencyList<T> {
+public interface GraphAdjacencyList<T, U> {
     void addEdge(T node);
-    void addNodeAndWeightConnected(T vertex,T destinationNode, Edge weight);
+    void addNodeAndWeightConnected(T vertex,T destinationNode, U weight);
     HashSet<?> findAllDestinationNodeAndWeightsToAVertex(T node);
     void printAdjacencyList();
-    HashMap<T, HashMap<T, Edge>> returnList();
+    HashMap<T, HashMap<T, U>> returnList();
 }
