@@ -11,7 +11,7 @@ public class Base {
     public static final int minimumDistance = 10;
     public static final int minimumVertexCanSelect = 1;
     public static final int maximumVertexCanSelect = 5;
-    private final String[] cities;
+    private final Vertex[] cities;
     // used to allocate random select city only once
     private final ArrayList<Vertex> tempCityList;
     // used to allocate random select city only once
@@ -20,19 +20,29 @@ public class Base {
     public Base() {
         // initializing arrays in constructor
         this.tempCityList = new ArrayList<>();
-        this.cities = new String[]{"Colombo", "Negombo", "Galle", "Kandy", "Sri Jayawardhanapura",
-                "Jaffna", "Nuwara Eliya", "Ratnapura", "Dambulla", "Matale"};
+        this.cities = new Vertex[]{
+                new Vertex("Colombo"),
+                new Vertex("Negombo"),
+                new Vertex( "Galle"),
+                new Vertex("Kandy"),
+                new Vertex("Sri Jayawardhanapura"),
+                new Vertex("Jaffna"),
+                new Vertex("Nuwara Eliya"),
+                new Vertex("Ratnapura"),
+                new Vertex("Dambulla"),
+                new Vertex("Matale")
+        };
         secondTempCityList = new ArrayList<>();
     }
 
     // create graph
-    protected void createGraph(GraphAdjacencyList<Vertex> adjacencyList) {
+    protected void createGraph(GraphAdjacencyList<Vertex, Edge> adjacencyList) {
         for (int i = 0; i < 10; i++) {
-            String randCity = this.selectRandomCityOnlyOnce();
-            adjacencyList.addEdge(new Vertex(randCity));
+            Vertex randCity = this.selectRandomCityOnlyOnce();
+            adjacencyList.addEdge(randCity);
             int vertexCount = (int) (Math.random() * (maximumVertexCanSelect - minimumVertexCanSelect + 1) + minimumVertexCanSelect);
             for (int j = 0; j < vertexCount; j++) {
-                adjacencyList.addNodeAndWeightConnected(new Vertex(randCity), new Vertex(this.selectRandomCityOnlyOnce(randCity)),
+                adjacencyList.addNodeAndWeightConnected(randCity, this.selectRandomCityOnlyOnce(randCity),
                         this.getRandomDistance());
             }
             this.clearSecondTempCityList();
@@ -42,24 +52,24 @@ public class Base {
     }
 
     // method for select random city from cities array
-    protected String selectRandomCity() {
+    protected Vertex selectRandomCity() {
         int index = (int) (Math.random() * maximumCities);
         return cities[index];
     }
 
     // method that only once return a random city
-    private String selectRandomCityOnlyOnce() {
-        String randCity = this.selectRandomCity();
+    private Vertex selectRandomCityOnlyOnce() {
+        Vertex randCity = this.selectRandomCity();
         if (this.tempCityList.isEmpty()) {
-            this.tempCityList.add(new Vertex(randCity));
+            this.tempCityList.add(randCity);
         } else {
             try {
                 for (Vertex tempCity : this.tempCityList) {
-                    if (tempCity.getName().equalsIgnoreCase(randCity)) {
+                    if (tempCity.getName().equalsIgnoreCase(randCity.getName())) {
                         randCity = this.getRandomCityExceptAlreadySelected(tempCityList);
                     }
                 }
-                this.tempCityList.add(new Vertex(randCity));
+                this.tempCityList.add(randCity);
             } catch (Exception e) {
                 throw new RuntimeException(e.getMessage());
             }
@@ -68,20 +78,20 @@ public class Base {
     }
 
     // method for return random city except for the given city.
-    private String selectRandomCityOnlyOnce(String randomExceptCity) {
-        String randomCity = this.selectRandomCity();
-        if (randomCity.equalsIgnoreCase(randomExceptCity)) {
+    private Vertex selectRandomCityOnlyOnce(Vertex randomExceptCity) {
+        Vertex randomCity = this.selectRandomCity();
+        if (randomCity.getName().equalsIgnoreCase(randomExceptCity.getName())) {
             randomCity = this.returnCityExceptGiven(randomCity, randomExceptCity);
             if (this.secondTempCityList.isEmpty()) {
-                this.secondTempCityList.add(new Vertex(randomCity));
+                this.secondTempCityList.add(randomCity);
             } else {
                 try {
                     for (Vertex tempCity : this.secondTempCityList) {
-                        if (tempCity.getName().equalsIgnoreCase(randomCity)) {
+                        if (tempCity.getName().equalsIgnoreCase(randomCity.getName())) {
                             randomCity = this.getRandomCityExceptAlreadySelected(secondTempCityList);
                         }
                     }
-                    this.secondTempCityList.add(new Vertex(randomCity));
+                    this.secondTempCityList.add(randomCity);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -91,13 +101,13 @@ public class Base {
     }
 
     // method return random city which not selected yet out of 10.
-    protected String getRandomCityExceptAlreadySelected(ArrayList<Vertex> tempCityList) {
+    protected Vertex getRandomCityExceptAlreadySelected(ArrayList<Vertex> tempCityList) {
         boolean[] temps = new boolean[maximumCities];
-        Queue<String> tempQueue = new LinkedList<>();
+        Queue<Vertex> tempQueue = new LinkedList<>();
         Arrays.fill(temps, false);
         for (Vertex tempCity : tempCityList) {
             for (int j = 0; j < cities.length; j++) {
-                if (cities[j].equalsIgnoreCase(tempCity.getName())) {
+                if (cities[j].getName().equalsIgnoreCase(tempCity.getName())) {
                     temps[j] = true;
                 }
             }
@@ -111,8 +121,8 @@ public class Base {
     }
 
     // method for check given random city and generated random city equality.
-    private String returnCityExceptGiven(String randomCity, String randomExceptCity) {
-        while (randomCity.equalsIgnoreCase(randomExceptCity)) {
+    private Vertex returnCityExceptGiven(Vertex randomCity, Vertex randomExceptCity) {
+        while (randomCity.getName().equalsIgnoreCase(randomExceptCity.getName())) {
             randomCity = this.selectRandomCity();
         }
         return randomCity;
@@ -152,8 +162,8 @@ public class Base {
     private void checkIfRemovedOnlyCombinationOfVertex(HashMap<Vertex, HashMap<Vertex, Edge>> adjList) {
         for (Map.Entry<Vertex, HashMap<Vertex, Edge>> vertexMapEntry : adjList.entrySet()) {
             if (vertexMapEntry.getValue().entrySet().isEmpty()) {
-                String randCity = this.selectRandomCityOnlyOnce();
-                vertexMapEntry.getValue().put(new Vertex(randCity), this.getRandomDistance());
+                Vertex randCity = this.selectRandomCityOnlyOnce(vertexMapEntry.getKey());
+                vertexMapEntry.getValue().put(randCity, this.getRandomDistance());
                 this.clearTempCityList();
                 this.removeDependencies(adjList);
             }
@@ -183,7 +193,7 @@ public class Base {
     }
 
     // print graph
-    public void displayGraph(GraphAdjacencyList<Vertex> adjList){
+    public void displayGraph(GraphAdjacencyList<Vertex, Edge> adjList){
         adjList.printAdjacencyList();
     }
 }
