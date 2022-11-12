@@ -1,4 +1,4 @@
-package bsccomp.group.maximumprofit.models;
+package bsccomp.group.common.models;
 
 public class Item {
     String name;
