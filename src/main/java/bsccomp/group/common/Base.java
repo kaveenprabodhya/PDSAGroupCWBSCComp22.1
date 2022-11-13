@@ -189,7 +189,7 @@ public class Base {
 
     // method generate random distance between 10-100
     protected Edge getRandomDistance() {
-        return new Edge((int) (Math.random() * maximumDistance + minimumDistance));
+        return new Edge((int) (Math.random() * (maximumDistance - minimumDistance+1)+ minimumDistance));
     }
 
     // print graph
