@@ -3,6 +3,7 @@ package bsccomp.group.identifyminimumconnectors;
 import bsccomp.group.common.Base;
 import bsccomp.group.common.GraphAdjacencyList;
 import bsccomp.group.common.models.Edge;
+import bsccomp.group.common.models.Pair;
 import bsccomp.group.common.models.Vertex;
 
 import java.util.*;
