@@ -21,16 +21,16 @@ public class Base {
         // initializing arrays in constructor
         this.tempCityList = new ArrayList<>();
         this.cities = new Vertex[]{
-                new Vertex("Colombo"),
-                new Vertex("Negombo"),
-                new Vertex( "Galle"),
-                new Vertex("Kandy"),
-                new Vertex("Sri Jayawardhanapura"),
-                new Vertex("Jaffna"),
-                new Vertex("Nuwara Eliya"),
-                new Vertex("Ratnapura"),
-                new Vertex("Dambulla"),
-                new Vertex("Matale")
+                new Vertex("A"),
+                new Vertex("B"),
+                new Vertex("C"),
+                new Vertex("D"),
+                new Vertex("E"),
+                new Vertex("F"),
+                new Vertex("G"),
+                new Vertex("H"),
+                new Vertex("I"),
+                new Vertex("J")
         };
         secondTempCityList = new ArrayList<>();
     }
