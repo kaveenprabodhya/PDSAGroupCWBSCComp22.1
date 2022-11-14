@@ -77,8 +77,7 @@ public class IdentifyMinimumConnectors extends Base {
         }
         this.getNonIncludedEdges(collectionOfLinkedVertices, temps);
 
-        temps.removeIf(vertexListPair -> vertexListPair.getValue().isEmpty());
-        System.out.println("\nafter remove temps empty values= " + temps.size());
+        System.out.println("\nafter remove found minimum values= " + temps.size());
         for (Pair<Vertex, List<Pair<Vertex, Edge>>> vertexListPair : temps) {
             System.out.println("\nvertexListPair.getValue().size(): " + vertexListPair.getValue().size());
             for (Pair<Vertex, Edge> vertexEdgePair : vertexListPair.getValue()) {
@@ -101,7 +100,7 @@ public class IdentifyMinimumConnectors extends Base {
                 " edge " + minPair.getValue().getValue().getWeight() +
                 " edge included " + minPair.getValue().getValue().isIncluded()
         );
-        System.out.println();
+        System.out.println("\nmark the vertex as visited and edge included");
         // find the parent matching key and edge add to answer list
         this.findMatchingParentNodeAndAddToAnswerList(minPair);
         temps.clear();
@@ -131,9 +130,37 @@ public class IdentifyMinimumConnectors extends Base {
                             vertexListPair.getValue().isIncluded()
             );
         }
-        System.out.println("before remove temp size "+temps.size());
-        temps.removeIf(vertexListPair -> vertexListPair.getValue().removeAll(foundPairsOfVisited));
+        System.out.println("-----");
+        for (Pair<Vertex, List<Pair<Vertex, Edge>>> vertexListPair : temps) {
+            System.out.println("\nvertexListPair.getValue().size(): " + vertexListPair.getValue().size());
+            for (Pair<Vertex, Edge> vertexEdgePair : vertexListPair.getValue()) {
+                System.out.println(
+                        "Visited vertex " + vertexListPair.getKey().getName() + " " +
+                                vertexListPair.getKey().isVisited() + " of " +
+                                vertexEdgePair.getKey().getName() + " visited " +
+                                vertexEdgePair.getKey().isVisited() + " of weight " +
+                                vertexEdgePair.getValue().getWeight() + " include " +
+                                vertexEdgePair.getValue().isIncluded()
+                );
+            }
+        }
+        System.out.println("before remove temp size " + temps.size());
+        for (Pair<Vertex, Edge> pair : foundPairsOfVisited) {
+            temps.removeIf(vertexListPair -> vertexListPair
+                    .getValue()
+                    .removeIf(vertexEdgePair -> vertexEdgePair
+                            .getKey()
+                            .getName()
+                            .equalsIgnoreCase(pair
+                                    .getKey()
+                                    .getName()
+                            )
+                    )
+            );
+        }
         System.out.println("\nafter remove temps size= " + temps.size());
+        temps.removeIf(vertexListPair -> vertexListPair.getValue().isEmpty());
+
     }
 
     private void getNonIncludedEdges(List<Pair<Vertex, List<Pair<Vertex, Edge>>>> collectionOfLinkedVertices,
@@ -152,7 +179,8 @@ public class IdentifyMinimumConnectors extends Base {
                     pairList.add(new Pair<>(vertexEdgePair.getKey(), vertexEdgePair.getValue()));
                 }
             }
-            temps.add(new Pair<>(vertexListPair.getKey(), pairList));
+            if (!pairList.isEmpty())
+                temps.add(new Pair<>(vertexListPair.getKey(), pairList));
         }
         this.filterEdgesWhichHasBothVisitedVertices(temps);
     }
