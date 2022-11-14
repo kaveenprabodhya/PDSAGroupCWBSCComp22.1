@@ -133,22 +133,22 @@ public class IdentifyMinimumConnectors extends Base {
     }
 
     //find minimum key
-    private void findNextMinimumKey(List<Pair<Vertex, Edge>> map, Pair<Vertex, Edge> entryFound) {
-        // remove the minimum
-        Vertex foundKey = null;
-        for (Pair<Vertex, Edge> vertexEdgePair : map) {
-            if (vertexEdgePair.getKey().getName().equalsIgnoreCase(entryFound.getKey().getName())
-                    && (vertexEdgePair.getValue().getWeight() == entryFound.getValue().getWeight())) {
-                foundKey = vertexEdgePair.getKey();
-            }
-        }
-        if (Objects.nonNull(foundKey)) {
-            System.out.println("Found key to removed: " + foundKey.getName());
-            map.remove(foundKey);
-        }
-        // get new minimum
-        this.findMinimumKey(map);
-    }
+//    private void findNextMinimumKey(List<Pair<Vertex, Edge>> map, Pair<Vertex, Edge> entryFound) {
+//        // remove the minimum
+//        Vertex foundKey = null;
+//        for (Pair<Vertex, Edge> vertexEdgePair : map) {
+//            if (vertexEdgePair.getKey().getName().equalsIgnoreCase(entryFound.getKey().getName())
+//                    && (vertexEdgePair.getValue().getWeight() == entryFound.getValue().getWeight())) {
+//                foundKey = vertexEdgePair.getKey();
+//            }
+//        }
+//        if (Objects.nonNull(foundKey)) {
+//            System.out.println("Found key to removed: " + foundKey.getName());
+//            map.remove(foundKey);
+//        }
+//        // get new minimum
+//        this.findMinimumKey(map);
+//    }
 
     private Pair<Vertex, Edge> findMinimumKey(List<Pair<Vertex, Edge>> map) {
         Pair<Vertex, Edge> key = Collections.min(map,
