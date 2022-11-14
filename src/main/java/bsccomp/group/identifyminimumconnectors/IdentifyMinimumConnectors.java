@@ -30,7 +30,7 @@ public class IdentifyMinimumConnectors extends Base {
             startVertex.setVisited(true);
             visitedVertexList.add(startVertex);
             // select shortest edge connected to the vertex
-            this.findShortestEdgeOfStaterVertex(startVertex);
+//            this.findShortestEdgeOfStaterVertex(startVertex);
         }
         // select the shortest edge connected to any vertex already connected
         while (isDisconnected()) {
@@ -131,46 +131,23 @@ public class IdentifyMinimumConnectors extends Base {
         temps.clear();
     }
 
-    private void findShortestEdgeOfStaterVertex(Vertex startVertex) {
+    /*private void findShortestEdgeOfStaterVertex(Vertex startVertex) {
         this.run(startVertex);
-    }
+    }*/
 
-    private void run(Vertex vertex) {
-        HashMap<Vertex, Edge> mapOfLinkedVerticesForGiven = new LinkedHashMap<>();
+    /*private void run(Vertex vertex) {
+        List<Pair<Vertex, Edge>> mapOfLinkedVerticesForGiven = new LinkedList<>();
         // get connected vertex and edges for given vertex
         this.getConnectedVerticesForGiven(vertex, mapOfLinkedVerticesForGiven);
         // get other links for given vertex
         this.getOtherLinkedVerticesForGiven(vertex, mapOfLinkedVerticesForGiven);
         // find min edge get its key
-        Map.Entry<Vertex, Edge> minKeyVertexWithEdge = this.findMinimumKey(mapOfLinkedVerticesForGiven);
+        Pair<Vertex, Edge> minKeyVertexWithEdge = this.findMinimumKey(mapOfLinkedVerticesForGiven);
         System.out.println("Found minimum key: " + minKeyVertexWithEdge.getKey().getName());
         this.findAndUpdateDirectlyConnectedOrLinkedVertex(vertex, minKeyVertexWithEdge.getKey());
-    }
+    }*/
 
-    //find minimum key
-    private Map.Entry<Vertex, Edge> findMinimumKey(HashMap<Vertex, Edge> map) {
-        Map.Entry<Vertex, Edge> key = Collections.min(map.entrySet(),
-                Comparator.comparingInt(value -> value.getValue().getWeight()));
-        List<String> listOfEqualsWeights = new LinkedList<>();
-        // find if map holding same weight keys if true get the minimum based on alphabetical order
-        for (Map.Entry<Vertex, Edge> vertexEdgeEntry : map.entrySet()) {
-            if (key.getValue().getWeight() == vertexEdgeEntry.getValue().getWeight()) {
-                listOfEqualsWeights.add(vertexEdgeEntry.getKey().getName());
-            }
-        }
-        if (listOfEqualsWeights.size() > 1) {
-            Collections.sort(listOfEqualsWeights);
-            String keyName = listOfEqualsWeights.get(0);
-            for (Map.Entry<Vertex, Edge> vertexEdgeEntry : map.entrySet()) {
-                if (keyName.equalsIgnoreCase(vertexEdgeEntry.getKey().getName())) {
-                    key = vertexEdgeEntry;
-                }
-            }
-        }
-        return key;
-    }
-
-    private void findAndUpdateDirectlyConnectedOrLinkedVertex(Vertex vertex, Vertex key) {
+    /*private void findAndUpdateDirectlyConnectedOrLinkedVertex(Vertex vertex, Vertex key) {
         // one of the keys are not directly connected in adjList, have to find the link
         for (Map.Entry<Vertex, HashMap<Vertex, Edge>> hashMapEntry : this.adjacencyList.returnList().entrySet()) {
             if (hashMapEntry.getKey().equals(vertex)) {
@@ -179,9 +156,9 @@ public class IdentifyMinimumConnectors extends Base {
                         Edge edge = this.adjacencyList.returnList().get(hashMapEntry.getKey()).get(key);
                         edge.setIncluded(true);
                         key.setVisited(true);
-                        HashMap<Vertex, Edge> hashMap = new HashMap<>();
-                        hashMap.put(key, edge);
-                        answerList.put(hashMapEntry.getKey(), hashMap);
+                        List<Pair<Vertex, Edge>> pairList = new LinkedList<>();
+                        pairList.add(new Pair<>(key, edge));
+                        answerList.add(new Pair<>(hashMapEntry.getKey(), pairList));
                         visitedVertexList.add(key);
                     }
                 }
@@ -192,16 +169,16 @@ public class IdentifyMinimumConnectors extends Base {
                         Edge edge = this.adjacencyList.returnList().get(hashMapEntry.getKey()).get(vertex);
                         edge.setIncluded(true);
                         key.setVisited(true);
-                        HashMap<Vertex, Edge> hashMap = new HashMap<>();
-                        hashMap.put(key, edge);
+                        List<Pair<Vertex, Edge>> pairList = new LinkedList<>();
+                        pairList.add(new Pair<>(key, edge));
                         System.out.println(vertexEdgeEntry.getKey().getName() + " -- " + vertexEdgeEntry.getKey().isVisited());
-                        answerList.put(vertexEdgeEntry.getKey(), hashMap);
+                        answerList.add(new Pair<>(vertexEdgeEntry.getKey(), pairList));
                         visitedVertexList.add(key);
                     }
                 }
             }
         }
-    }
+    }*/
 
     // get subset of linked vertices
     private void getOtherLinkedVerticesForGiven(Vertex vertex, List<Pair<Vertex, Edge>> temps) {
@@ -227,30 +204,30 @@ public class IdentifyMinimumConnectors extends Base {
     private HashMap<Vertex, Edge> checkForOtherLinks(Vertex vertex) {
         HashMap<Vertex, Edge> temps = new LinkedHashMap<>();
         for (Map.Entry<Vertex, HashMap<Vertex, Edge>> hashMapEntry : this.adjacencyList.returnList().entrySet()) {
-            System.out.println("Top level City Name()- " + hashMapEntry.getKey().getName());
+//            System.out.println("Top level City Name()- " + hashMapEntry.getKey().getName());
             if (!hashMapEntry.getKey().getName().equalsIgnoreCase(vertex.getName())) {
                 for (Map.Entry<Vertex, Edge> vertexEdgeEntry : hashMapEntry.getValue().entrySet()) {
                     if (vertexEdgeEntry.getKey().getName().equalsIgnoreCase(vertex.getName())) {
-                        System.out.println("Bottom Level City Name()- " +
-                                vertexEdgeEntry.getKey().getName() +
-                                " Bottom level city isVisited()- " +
-                                vertexEdgeEntry.getKey().isVisited() +
-                                "  vertex.getName()- " + vertex.getName() +
-                                "  Top level city Name()- " + hashMapEntry.getKey().getName() +
-                                "  Top level city isVisited()- " + hashMapEntry.getKey().isVisited() +
-                                " edge- " + vertexEdgeEntry.getValue().getWeight() +
-                                " isSelected- " + vertexEdgeEntry.getValue().isIncluded());
+//                        System.out.println("Bottom Level City Name()- " +
+//                                vertexEdgeEntry.getKey().getName() +
+//                                " Bottom level city isVisited()- " +
+//                                vertexEdgeEntry.getKey().isVisited() +
+//                                "  vertex.getName()- " + vertex.getName() +
+//                                "  Top level city Name()- " + hashMapEntry.getKey().getName() +
+//                                "  Top level city isVisited()- " + hashMapEntry.getKey().isVisited() +
+//                                " edge- " + vertexEdgeEntry.getValue().getWeight() +
+//                                " isSelected- " + vertexEdgeEntry.getValue().isIncluded());
                         temps.put(hashMapEntry.getKey(), vertexEdgeEntry.getValue());
                     }
                 }
             }
         }
-        System.out.println();
-        System.out.println("Other Links");
-        for (Map.Entry<Vertex, Edge> vertexEdgeEntry : temps.entrySet()) {
-            System.out.println("Key: " + vertexEdgeEntry.getKey().getName() +
-                    " Val: " + vertexEdgeEntry.getValue().getWeight());
-        }
+//        System.out.println("\nOther Links from check combinations");
+//        for (Map.Entry<Vertex, Edge> vertexEdgeEntry : temps.entrySet()) {
+//            System.out.println("Key: " + vertexEdgeEntry.getKey().getName() +
+//                    " Val: " + vertexEdgeEntry.getValue().getWeight());
+//        }
+//        System.out.println();
         return temps;
     }
 
