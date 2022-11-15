@@ -14,6 +14,6 @@ public class GameManager {
     public void identifyMinimumConnectors(){
         IdentifyMinimumConnectors minimumConnectors = new IdentifyMinimumConnectors(new GraphAdjacencyListImpl());
         minimumConnectors.findMinimumConnectors();
-        minimumConnectors.calculateMinimumDistance();
+        System.out.println(minimumConnectors.calculateMinimumDistance());
     }
 }
