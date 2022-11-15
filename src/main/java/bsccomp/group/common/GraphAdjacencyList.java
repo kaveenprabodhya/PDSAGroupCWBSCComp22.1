@@ -8,5 +8,6 @@ public interface GraphAdjacencyList<T, U> {
     void addNodeAndWeightConnected(T vertex,T destinationNode, U weight);
     HashSet<?> findAllDestinationNodeAndWeightsToAVertex(T node);
     void printAdjacencyList();
+    void printAdjacencyList(boolean bool);
     HashMap<T, HashMap<T, U>> returnList();
 }
