@@ -22,7 +22,7 @@ public class IdentifyMinimumConnectors extends Base {
     public void findMinimumConnectors() {
         // create a graph for find minimum connectors
         this.createGraph(adjacencyList);
-        this.displayGraph(this.adjacencyList);
+        this.displayGraph(this.adjacencyList, true);
         // select any vertex
         Map.Entry<Vertex, HashMap<Vertex, Edge>> mapEntry = this.adjacencyList.returnList().entrySet().iterator().next();
         Vertex startVertex = mapEntry.getKey();
