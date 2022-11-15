@@ -53,14 +53,14 @@ public class IdentifyMinimumConnectors extends Base {
     }
 
     // calculate Minimum distance
-    public void calculateMinimumDistance() {
+    public int calculateMinimumDistance() {
         int distance = 0;
         for (Pair<Vertex, List<Pair<Vertex, Edge>>> vertexListPair : this.answerList) {
             for (Pair<Vertex, Edge> vertexEdgePair : vertexListPair.getValue()) {
                 distance += vertexEdgePair.getValue().getWeight();
             }
         }
-        System.out.println(distance);
+        return distance;
     }
 
     private void findNextShortestEdge() {
