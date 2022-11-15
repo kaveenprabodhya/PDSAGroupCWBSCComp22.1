@@ -193,7 +193,7 @@ public class Base {
     }
 
     // print graph
-    public void displayGraph(GraphAdjacencyList<Vertex, Edge> adjList){
-        adjList.printAdjacencyList();
+    public void displayGraph(GraphAdjacencyList<Vertex, Edge> adjList, boolean bool){
+        adjList.printAdjacencyList(bool);
     }
 }
