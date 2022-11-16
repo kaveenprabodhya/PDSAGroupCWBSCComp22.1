@@ -50,12 +50,9 @@ public class GraphAdjacencyListImpl implements GraphAdjacencyList<Vertex, Edge> 
     public void printAdjacencyList(boolean bool) {
         if (bool) {
             for (Vertex key : this.adjacencyList.keySet()) {
-                System.out.print("\n[" + key.getName()
-                        + "] => ");
-                this.adjacencyList.get(key).forEach((key1, value) -> System.out.print(
-                        "\t[" + key1.getName()
-                                + ", "
-                                + value.getWeight() + "], "));
+                System.out.print("\n[" + key.getName() + "] ->\t");
+                this.adjacencyList.get(key).forEach((key1, value) ->
+                        System.out.print("[" + key1.getName() + " / " + value.getWeight() + "],\t"));
             }
             System.out.println();
         } else {
