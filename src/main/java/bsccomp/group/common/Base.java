@@ -196,4 +196,14 @@ public class Base {
     public void displayGraph(GraphAdjacencyList<Vertex, Edge> adjList, boolean bool){
         adjList.printAdjacencyList(bool);
     }
+
+    // check until all vertices get visited
+    protected boolean isDisconnected(GraphAdjacencyList<Vertex, Edge> adjacencyList) {
+        for (Map.Entry<Vertex, HashMap<Vertex, Edge>> hashMapEntry : adjacencyList.returnList().entrySet()) {
+            if (!hashMapEntry.getKey().isVisited()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
