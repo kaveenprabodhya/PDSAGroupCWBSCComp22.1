@@ -12,6 +12,7 @@ public class IdentifyMinimumConnectors extends Base {
     private final GraphAdjacencyList<Vertex, Edge> adjacencyList;
     private final List<Pair<Vertex, List<Pair<Vertex, Edge>>>> answerList;
     private final List<Vertex> visitedVertexList;
+    private Vertex startNode;
 
     public IdentifyMinimumConnectors(GraphAdjacencyList<Vertex, Edge> adjacencyList) {
         this.adjacencyList = adjacencyList;
@@ -28,6 +29,7 @@ public class IdentifyMinimumConnectors extends Base {
         Vertex startVertex = mapEntry.getKey();
         if (answerList.isEmpty()) {
             startVertex.setVisited(true);
+            this.setStartNode(startVertex);
             visitedVertexList.add(startVertex);
         }
         // select the shortest edge connected to any vertex already connected
@@ -50,6 +52,14 @@ public class IdentifyMinimumConnectors extends Base {
             }
         }
 //        System.out.println("answers: " + count);
+    }
+
+    public Vertex getStartNode() {
+        return startNode;
+    }
+
+    public void setStartNode(Vertex startNode) {
+        this.startNode = startNode;
     }
 
     // calculate Minimum distance
