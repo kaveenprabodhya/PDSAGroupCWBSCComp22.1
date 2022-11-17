@@ -1,6 +1,7 @@
 package bsccomp.group.common;
 
 import bsccomp.group.common.models.Edge;
+import bsccomp.group.common.models.Pair;
 import bsccomp.group.common.models.Vertex;
 
 import java.util.*;
@@ -189,11 +190,11 @@ public class Base {
 
     // method generate random distance between 10-100
     protected Edge getRandomDistance() {
-        return new Edge((int) (Math.random() * (maximumDistance - minimumDistance+1)+ minimumDistance));
+        return new Edge((int) (Math.random() * (maximumDistance - minimumDistance + 1) + minimumDistance));
     }
 
     // print graph
-    public void displayGraph(GraphAdjacencyList<Vertex, Edge> adjList, boolean bool){
+    public void displayGraph(GraphAdjacencyList<Vertex, Edge> adjList, boolean bool) {
         adjList.printAdjacencyList(bool);
     }
 
@@ -205,5 +206,49 @@ public class Base {
             }
         }
         return false;
+    }
+
+    // get subset of linked vertices
+    protected void getOtherLinkedVerticesForGiven(Vertex vertex,
+                                                  List<Pair<Vertex, List<Pair<Vertex, Edge>>>> temps,
+                                                  GraphAdjacencyList<Vertex, Edge> adjacencyList) {
+        Set<Map.Entry<Vertex, Edge>> entries = this.checkForOtherLinks(vertex, adjacencyList).entrySet();
+        if (!entries.isEmpty()) {
+            List<Pair<Vertex, Edge>> pairList = new LinkedList<>();
+            for (Map.Entry<Vertex, Edge> entry : entries) {
+                pairList.add(new Pair<>(entry.getKey(), entry.getValue()));
+            }
+            temps.add(new Pair<>(vertex, pairList));
+        }
+    }
+
+    // get subset of directly connected vertices
+    protected void getConnectedVerticesForGiven(Vertex vertex,
+                                                List<Pair<Vertex, List<Pair<Vertex, Edge>>>> temps,
+                                                GraphAdjacencyList<Vertex, Edge> adjacencyList) {
+        Set<Map.Entry<Vertex, Edge>> entries = adjacencyList.returnList().get(vertex).entrySet();
+        if (!entries.isEmpty()) {
+            List<Pair<Vertex, Edge>> pairList = new LinkedList<>();
+            for (Map.Entry<Vertex, Edge> entry : entries) {
+                pairList.add(new Pair<>(entry.getKey(), entry.getValue()));
+            }
+            temps.add(new Pair<>(vertex, pairList));
+        }
+    }
+
+    // check for other vertices that have links to a given vertex
+    private HashMap<Vertex, Edge> checkForOtherLinks(Vertex vertex,
+                                                     GraphAdjacencyList<Vertex, Edge> adjacencyList) {
+        HashMap<Vertex, Edge> temps = new LinkedHashMap<>();
+        for (Map.Entry<Vertex, HashMap<Vertex, Edge>> hashMapEntry : adjacencyList.returnList().entrySet()) {
+            if (!hashMapEntry.getKey().getName().equalsIgnoreCase(vertex.getName())) {
+                for (Map.Entry<Vertex, Edge> vertexEdgeEntry : hashMapEntry.getValue().entrySet()) {
+                    if (vertexEdgeEntry.getKey().getName().equalsIgnoreCase(vertex.getName())) {
+                        temps.put(hashMapEntry.getKey(), vertexEdgeEntry.getValue());
+                    }
+                }
+            }
+        }
+        return temps;
     }
 }

@@ -81,9 +81,9 @@ public class IdentifyMinimumConnectors extends Base {
 //            for (Map.Entry<Vertex, HashMap<Vertex, Edge>> hashMapEntry : adjacencyList.returnList().entrySet()) {
 //                if (hashMapEntry.getKey().equals(vertex)) {
                     // get connected vertex and edges for given vertex
-                    this.getConnectedVerticesForGiven(vertex, collectionOfLinkedVertices);
+                    this.getConnectedVerticesForGiven(vertex, collectionOfLinkedVertices, adjacencyList);
                     // get other links for given vertex
-                    this.getOtherLinkedVerticesForGiven(vertex, collectionOfLinkedVertices);
+                    this.getOtherLinkedVerticesForGiven(vertex, collectionOfLinkedVertices, adjacencyList);
 //                }
 //            }
         }
@@ -263,46 +263,5 @@ public class IdentifyMinimumConnectors extends Base {
                 }
             }
         }
-    }
-
-    // get subset of linked vertices
-    private void getOtherLinkedVerticesForGiven(Vertex vertex,
-                                                  List<Pair<Vertex, List<Pair<Vertex, Edge>>>> temps) {
-        Set<Map.Entry<Vertex, Edge>> entries = this.checkForOtherLinks(vertex).entrySet();
-        if (!entries.isEmpty()) {
-            List<Pair<Vertex, Edge>> pairList = new LinkedList<>();
-            for (Map.Entry<Vertex, Edge> entry : entries) {
-                pairList.add(new Pair<>(entry.getKey(), entry.getValue()));
-            }
-            temps.add(new Pair<>(vertex, pairList));
-        }
-    }
-
-    // get subset of directly connected vertices
-    private void getConnectedVerticesForGiven(Vertex vertex,
-                                                List<Pair<Vertex, List<Pair<Vertex, Edge>>>> temps) {
-        Set<Map.Entry<Vertex, Edge>> entries = adjacencyList.returnList().get(vertex).entrySet();
-        if (!entries.isEmpty()) {
-            List<Pair<Vertex, Edge>> pairList = new LinkedList<>();
-            for (Map.Entry<Vertex, Edge> entry : entries) {
-                pairList.add(new Pair<>(entry.getKey(), entry.getValue()));
-            }
-            temps.add(new Pair<>(vertex, pairList));
-        }
-    }
-
-    // check for other vertices that have links to a given vertex
-    private HashMap<Vertex, Edge> checkForOtherLinks(Vertex vertex) {
-        HashMap<Vertex, Edge> temps = new LinkedHashMap<>();
-        for (Map.Entry<Vertex, HashMap<Vertex, Edge>> hashMapEntry : adjacencyList.returnList().entrySet()) {
-            if (!hashMapEntry.getKey().getName().equalsIgnoreCase(vertex.getName())) {
-                for (Map.Entry<Vertex, Edge> vertexEdgeEntry : hashMapEntry.getValue().entrySet()) {
-                    if (vertexEdgeEntry.getKey().getName().equalsIgnoreCase(vertex.getName())) {
-                        temps.put(hashMapEntry.getKey(), vertexEdgeEntry.getValue());
-                    }
-                }
-            }
-        }
-        return temps;
     }
 }
