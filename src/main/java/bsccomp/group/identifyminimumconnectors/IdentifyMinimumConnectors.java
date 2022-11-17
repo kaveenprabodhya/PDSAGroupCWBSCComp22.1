@@ -266,7 +266,8 @@ public class IdentifyMinimumConnectors extends Base {
     }
 
     // get subset of linked vertices
-    private void getOtherLinkedVerticesForGiven(Vertex vertex, List<Pair<Vertex, List<Pair<Vertex, Edge>>>> temps) {
+    private void getOtherLinkedVerticesForGiven(Vertex vertex,
+                                                  List<Pair<Vertex, List<Pair<Vertex, Edge>>>> temps) {
         Set<Map.Entry<Vertex, Edge>> entries = this.checkForOtherLinks(vertex).entrySet();
         if (!entries.isEmpty()) {
             List<Pair<Vertex, Edge>> pairList = new LinkedList<>();
@@ -278,7 +279,8 @@ public class IdentifyMinimumConnectors extends Base {
     }
 
     // get subset of directly connected vertices
-    private void getConnectedVerticesForGiven(Vertex vertex, List<Pair<Vertex, List<Pair<Vertex, Edge>>>> temps) {
+    private void getConnectedVerticesForGiven(Vertex vertex,
+                                                List<Pair<Vertex, List<Pair<Vertex, Edge>>>> temps) {
         Set<Map.Entry<Vertex, Edge>> entries = adjacencyList.returnList().get(vertex).entrySet();
         if (!entries.isEmpty()) {
             List<Pair<Vertex, Edge>> pairList = new LinkedList<>();
