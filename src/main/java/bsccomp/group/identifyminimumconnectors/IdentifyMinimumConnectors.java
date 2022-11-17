@@ -78,14 +78,14 @@ public class IdentifyMinimumConnectors extends Base {
         List<Pair<Vertex, List<Pair<Vertex, Edge>>>> temps = new LinkedList<>();
 
         for (Vertex vertex : visitedVertexList) {
-            for (Map.Entry<Vertex, HashMap<Vertex, Edge>> hashMapEntry : adjacencyList.returnList().entrySet()) {
-                if (hashMapEntry.getKey().equals(vertex)) {
+//            for (Map.Entry<Vertex, HashMap<Vertex, Edge>> hashMapEntry : adjacencyList.returnList().entrySet()) {
+//                if (hashMapEntry.getKey().equals(vertex)) {
                     // get connected vertex and edges for given vertex
                     this.getConnectedVerticesForGiven(vertex, collectionOfLinkedVertices);
                     // get other links for given vertex
                     this.getOtherLinkedVerticesForGiven(vertex, collectionOfLinkedVertices);
-                }
-            }
+//                }
+//            }
         }
         this.getNonIncludedEdges(collectionOfLinkedVertices, temps);
 
