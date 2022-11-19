@@ -33,7 +33,7 @@ public class IdentifyMinimumConnectors extends Base {
             visitedVertexList.add(startVertex);
         }
         // select the shortest edge connected to any vertex already connected
-        while (isDisconnected(adjacencyList)) {
+        while (isDisconnected()) {
             this.findNextShortestEdge();
         }
         System.out.println();
@@ -263,5 +263,15 @@ public class IdentifyMinimumConnectors extends Base {
                 }
             }
         }
+    }
+
+    // check until all vertices get visited
+    private boolean isDisconnected() {
+        for (Map.Entry<Vertex, HashMap<Vertex, Edge>> hashMapEntry : adjacencyList.returnList().entrySet()) {
+            if (!hashMapEntry.getKey().isVisited()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

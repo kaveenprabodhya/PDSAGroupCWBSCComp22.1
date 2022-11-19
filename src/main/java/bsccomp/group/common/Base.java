@@ -198,16 +198,6 @@ public class Base {
         adjList.printAdjacencyList(bool);
     }
 
-    // check until all vertices get visited
-    protected boolean isDisconnected(GraphAdjacencyList<Vertex, Edge> adjacencyList) {
-        for (Map.Entry<Vertex, HashMap<Vertex, Edge>> hashMapEntry : adjacencyList.returnList().entrySet()) {
-            if (!hashMapEntry.getKey().isVisited()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     // get subset of linked vertices
     protected void getOtherLinkedVerticesForGiven(Vertex vertex,
                                                   List<Pair<Vertex, List<Pair<Vertex, Edge>>>> temps,
