@@ -274,4 +274,8 @@ public class IdentifyMinimumConnectors extends Base {
         }
         return false;
     }
+
+    public List<Pair<Vertex, List<Pair<Vertex, Edge>>>> getAnswerList() {
+        return answerList;
+    }
 }
