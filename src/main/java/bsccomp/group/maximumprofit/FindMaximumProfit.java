@@ -54,6 +54,10 @@ public class FindMaximumProfit {
         return k;
     }
 
+    public Item[] getItems() {
+        return items;
+    }
+
     public void print() {
         System.out.print("\t\t\t\t\t\t\t\t");
         for (int i = 0; i < 11; i++) {
