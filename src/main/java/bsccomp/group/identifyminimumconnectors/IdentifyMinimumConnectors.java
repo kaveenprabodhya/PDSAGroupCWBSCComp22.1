@@ -278,4 +278,8 @@ public class IdentifyMinimumConnectors extends Base {
     public List<Pair<Vertex, List<Pair<Vertex, Edge>>>> getAnswerList() {
         return answerList;
     }
+
+    public GraphAdjacencyList<Vertex, Edge> getAdjacencyList() {
+        return adjacencyList;
+    }
 }

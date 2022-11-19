@@ -338,6 +338,10 @@ public class IdentifyShortestPath extends Base {
         return table;
     }
 
+    public GraphAdjacencyList<Vertex, Edge> getAdjacencyList() {
+        return adjacencyList;
+    }
+
     public Vertex getSourceVertex() {
         return sourceVertex;
     }
