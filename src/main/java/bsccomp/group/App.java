@@ -1,12 +1,9 @@
 package bsccomp.group;
 
-import bsccomp.group.common.models.Pair;
 import bsccomp.group.common.models.User;
-import bsccomp.group.common.models.Vertex;
 import bsccomp.group.manager.GameManager;
 
 import java.sql.SQLException;
-import java.util.Objects;
 
 /**
  * 06-Nov-22
