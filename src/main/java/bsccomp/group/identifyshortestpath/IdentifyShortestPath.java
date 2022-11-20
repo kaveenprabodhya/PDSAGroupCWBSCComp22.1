@@ -350,15 +350,15 @@ public class IdentifyShortestPath extends Base {
         this.sourceVertex = sourceVertex;
     }
 
-    public void printTable(){
+    public void printTable() {
         System.out.println("\nprint table");
-            for (Pair<Vertex, Pair<Vertex, Pair<Integer, Boolean>>> tablePair : table) {
-                System.out.println(
-                        "vertex: " + tablePair.getKey().getName() +
-                                " previous: " + (Objects.isNull(tablePair.getValue().getKey()) ? "null" : tablePair.getValue().getKey().getName()) +
-                                " distance from source " + (Objects.isNull(tablePair.getValue().getValue()) ? "null" : tablePair.getValue().getValue().getKey()) +
-                                " taken " + tablePair.getValue().getValue().getValue()
-                );
-            }
+        for (Pair<Vertex, Pair<Vertex, Pair<Integer, Boolean>>> tablePair : table) {
+            System.out.println(
+                    "vertex: " + tablePair.getKey().getName() +
+                            " previous: " + (Objects.isNull(tablePair.getValue().getKey()) ? "null" : tablePair.getValue().getKey().getName()) +
+                            " distance from source " + (Objects.isNull(tablePair.getValue().getValue()) ? "null" : tablePair.getValue().getValue().getKey()) +
+                            " taken " + tablePair.getValue().getValue().getValue()
+            );
+        }
     }
 }
