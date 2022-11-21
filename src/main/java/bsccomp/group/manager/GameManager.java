@@ -97,7 +97,7 @@ public class GameManager {
     }
 
     public List<Vertex> getListOfShortestPathVertices() {
-        return minimumConnectors.getVerticesList();
+        return shortestPath.getVerticesList();
     }
 
     public HashMap<Vertex, HashMap<Vertex, Edge>> getGraphOfShortestPath() {
