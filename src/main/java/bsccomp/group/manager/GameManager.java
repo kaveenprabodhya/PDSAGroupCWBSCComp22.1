@@ -162,7 +162,7 @@ public class GameManager {
     public static void addMinimumConnectorsAnswersDataToDB(List<Pair<Vertex, Pair<Vertex, Edge>>> userAnswerList, User user) throws SQLException {
         User createdUser = addUserDetailsDataToDB(user);
         String setId = getId();
-        String query = "INSERT INTO minimumconnectors(vertex, toVertex, edge, user_id) VALUES (?,?,?,?)";
+        String query = "INSERT INTO minimumconnectors(vertex, toVertex, edge, set_id, user_id) VALUES (?,?,?,?,?)";
         try {
             for (Pair<Vertex, Pair<Vertex, Edge>> answerListPair : userAnswerList) {
                 preparedStatement = connection.prepareStatement(query);
@@ -182,7 +182,7 @@ public class GameManager {
                                                       User user) throws SQLException {
         User createdUser = addUserDetailsDataToDB(user);
         String setId = getId();
-        String query = "INSERT INTO shortestpath(vertex, prevVertex, distanceFromSrc, user_id) VALUES (?,?,?,?)";
+        String query = "INSERT INTO shortestpath(vertex, prevVertex, distanceFromSrc, set_id, user_id) VALUES (?,?,?,?,?)";
         try {
             for (Pair<Vertex, Pair<Vertex, Pair<Integer, Boolean>>> answerListPair : userAnswerList) {
                 preparedStatement = connection.prepareStatement(query);
