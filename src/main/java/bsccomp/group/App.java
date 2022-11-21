@@ -24,7 +24,7 @@ public class App {
 //        boolean b = gameManager.checkAnswersOfMaximumProfit(gameManager.getMaximumProfitFor10kgs());
 //        System.out.println(gameManager.getMaximumProfitFor10kgs());
 //        if (b) {
-//            GameManager.addMaximumProfitAnswersDataToDB(String.valueOf(gameManager.getMaximumProfitFor10kgs()), new User("Kaveen"));
+//            GameManager.addMaximumProfitAnswersDataToDB(gameManager.getMaximumProfitFor10kgs(), new User("Kaveen"));
 //        } else {
 //            System.out.println("wrong answer");
 //        }
