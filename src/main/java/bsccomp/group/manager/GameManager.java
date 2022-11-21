@@ -201,12 +201,12 @@ public class GameManager {
         }
     }
 
-    public static void addMaximumProfitAnswersDataToDB(String maximumProfitAnswer, User user) throws SQLException {
+    public static void addMaximumProfitAnswersDataToDB(int maximumProfitAnswer, User user) throws SQLException {
         User createdUser = addUserDetailsDataToDB(user);
         String query = "INSERT INTO maximumprofit(maximum_profit, user_id) VALUES (?,?)";
         try {
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, maximumProfitAnswer);
+            preparedStatement.setInt(1, maximumProfitAnswer);
             preparedStatement.setInt(2, createdUser.getUserId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
