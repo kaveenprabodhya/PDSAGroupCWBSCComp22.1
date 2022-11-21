@@ -42,25 +42,21 @@ public class GameManager {
         return minimumConnectors.calculateMinimumDistance();
     }
 
-    public List<Pair<Vertex, List<Pair<Vertex, Edge>>>> getAnswersForMinimumConnectors() {
+    public List<Pair<Vertex, Pair<Vertex, Edge>>> getAnswersForMinimumConnectors() {
         return minimumConnectors.getAnswerList();
     }
 
-    public boolean checkAnswersOfMinimumConnectors(List<Pair<Vertex, List<Pair<Vertex, Edge>>>> pairList) {
+    public boolean checkAnswersOfMinimumConnectors(List<Pair<Vertex, Pair<Vertex, Edge>>> pairList) {
         boolean[] answers = new boolean[9];
         int count = 0;
         Arrays.fill(answers, false);
-        for (Pair<Vertex, List<Pair<Vertex, Edge>>> vertexListPair : getAnswersForMinimumConnectors()) {
-            for (Pair<Vertex, Edge> vertexEdgePair : vertexListPair.getValue()) {
-                for (Pair<Vertex, List<Pair<Vertex, Edge>>> answerListPair : pairList) {
-                    for (Pair<Vertex, Edge> answerEdgePair : answerListPair.getValue()) {
-                        if (vertexListPair.getKey().getName().equalsIgnoreCase(answerListPair.getKey().getName())
-                                && vertexEdgePair.getKey().getName().equalsIgnoreCase(answerEdgePair.getKey().getName())
-                                && (vertexEdgePair.getValue().getWeight() == answerEdgePair.getValue().getWeight())) {
-                            answers[count] = true;
-                            count++;
-                        }
-                    }
+        for (Pair<Vertex, Pair<Vertex, Edge>> vertexListPair : getAnswersForMinimumConnectors()) {
+            for (Pair<Vertex, Pair<Vertex, Edge>> answerListPair : pairList) {
+                if (vertexListPair.getKey().getName().equalsIgnoreCase(answerListPair.getKey().getName())
+                        && vertexListPair.getValue().getKey().getName().equalsIgnoreCase(answerListPair.getValue().getKey().getName())
+                        && (vertexListPair.getValue().getValue().getWeight() == answerListPair.getValue().getValue().getWeight())) {
+                    answers[count] = true;
+                    count++;
                 }
             }
         }
@@ -159,19 +155,17 @@ public class GameManager {
         }
     }
 
-    public static void addMinimumConnectorsAnswersDataToDB(List<Pair<Vertex, List<Pair<Vertex, Edge>>>> userAnswerList, User user) throws SQLException {
+    public static void addMinimumConnectorsAnswersDataToDB(List<Pair<Vertex, Pair<Vertex, Edge>>> userAnswerList, User user) throws SQLException {
         User createdUser = addUserDetailsDataToDB(user);
         String query = "INSERT INTO minimumconnectors(vertex, toVertex, edge, user_id) VALUES (?,?,?,?)";
         try {
-            for (Pair<Vertex, List<Pair<Vertex, Edge>>> answerListPair : userAnswerList) {
-                for (Pair<Vertex, Edge> answerEdgePair : answerListPair.getValue()) {
-                    preparedStatement = connection.prepareStatement(query);
-                    preparedStatement.setString(1, answerListPair.getKey().getName());
-                    preparedStatement.setString(2, answerEdgePair.getKey().getName());
-                    preparedStatement.setInt(3, answerEdgePair.getValue().getWeight());
-                    preparedStatement.setInt(4, createdUser.getUserId());
-                    preparedStatement.executeUpdate();
-                }
+            for (Pair<Vertex, Pair<Vertex, Edge>> answerListPair : userAnswerList) {
+                preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, answerListPair.getKey().getName());
+                preparedStatement.setString(2, answerListPair.getValue().getKey().getName());
+                preparedStatement.setInt(3, answerListPair.getValue().getValue().getWeight());
+                preparedStatement.setInt(4, createdUser.getUserId());
+                preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
