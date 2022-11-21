@@ -31,7 +31,7 @@ public class GameManager {
     }
 
     public List<Vertex> getListOfMinimumConnectorsVertices() {
-        return minimumConnectors.getVertexList();
+        return minimumConnectors.getVerticesList();
     }
 
     public String getStartNodeOfMinimumConnectors() {
@@ -94,6 +94,10 @@ public class GameManager {
 
     public void startFindShortestPath() {
         shortestPath.findShortestPath();
+    }
+
+    public List<Vertex> getListOfShortestPathVertices() {
+        return minimumConnectors.getVerticesList();
     }
 
     public HashMap<Vertex, HashMap<Vertex, Edge>> getGraphOfShortestPath() {
