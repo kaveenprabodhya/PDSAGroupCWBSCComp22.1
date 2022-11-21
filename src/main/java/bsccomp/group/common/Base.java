@@ -241,4 +241,12 @@ public class Base {
         }
         return temps;
     }
+
+    protected List<Vertex> getVertexList(GraphAdjacencyList<Vertex, Edge> adjacencyList){
+        List<Vertex> vertexList = new LinkedList<>();
+        for (Map.Entry<Vertex, HashMap<Vertex, Edge>> hashMapEntry : adjacencyList.returnList().entrySet()) {
+            vertexList.add(hashMapEntry.getKey());
+        }
+        return vertexList;
+    }
 }
