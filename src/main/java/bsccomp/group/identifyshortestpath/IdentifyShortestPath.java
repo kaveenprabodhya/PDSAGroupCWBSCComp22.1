@@ -361,4 +361,8 @@ public class IdentifyShortestPath extends Base {
             );
         }
     }
+
+    public List<Vertex> getVerticesList(){
+        return this.getVertexList(adjacencyList);
+    }
 }
