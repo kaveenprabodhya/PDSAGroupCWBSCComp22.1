@@ -283,11 +283,7 @@ public class IdentifyMinimumConnectors extends Base {
         return adjacencyList;
     }
 
-    public List<Vertex> getVertexList(){
-        List<Vertex> vertexList = new LinkedList<>();
-        for (Map.Entry<Vertex, HashMap<Vertex, Edge>> hashMapEntry : adjacencyList.returnList().entrySet()) {
-            vertexList.add(hashMapEntry.getKey());
-        }
-        return vertexList;
+    public List<Vertex> getVerticesList(){
+        return this.getVertexList(adjacencyList);
     }
 }
