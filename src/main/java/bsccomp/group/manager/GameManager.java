@@ -155,8 +155,13 @@ public class GameManager {
         }
     }
 
+    public static String getId(){
+        return UUID.randomUUID().toString();
+    }
+
     public static void addMinimumConnectorsAnswersDataToDB(List<Pair<Vertex, Pair<Vertex, Edge>>> userAnswerList, User user) throws SQLException {
         User createdUser = addUserDetailsDataToDB(user);
+        String setId = getId();
         String query = "INSERT INTO minimumconnectors(vertex, toVertex, edge, user_id) VALUES (?,?,?,?)";
         try {
             for (Pair<Vertex, Pair<Vertex, Edge>> answerListPair : userAnswerList) {
@@ -164,7 +169,8 @@ public class GameManager {
                 preparedStatement.setString(1, answerListPair.getKey().getName());
                 preparedStatement.setString(2, answerListPair.getValue().getKey().getName());
                 preparedStatement.setInt(3, answerListPair.getValue().getValue().getWeight());
-                preparedStatement.setInt(4, createdUser.getUserId());
+                preparedStatement.setString(4, setId);
+                preparedStatement.setInt(5, createdUser.getUserId());
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -175,6 +181,7 @@ public class GameManager {
     public static void addShortestPathAnswersDataToDB(List<Pair<Vertex, Pair<Vertex, Pair<Integer, Boolean>>>> userAnswerList,
                                                       User user) throws SQLException {
         User createdUser = addUserDetailsDataToDB(user);
+        String setId = getId();
         String query = "INSERT INTO shortestpath(vertex, prevVertex, distanceFromSrc, user_id) VALUES (?,?,?,?)";
         try {
             for (Pair<Vertex, Pair<Vertex, Pair<Integer, Boolean>>> answerListPair : userAnswerList) {
@@ -185,7 +192,8 @@ public class GameManager {
                         : answerListPair.getValue().getKey().getName())
                 );
                 preparedStatement.setInt(3, answerListPair.getValue().getValue().getKey());
-                preparedStatement.setInt(4, createdUser.getUserId());
+                preparedStatement.setString(4, setId);
+                preparedStatement.setInt(5, createdUser.getUserId());
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
